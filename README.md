@@ -17,10 +17,15 @@ Then use the outcome of above azure cli query to create the secrets into the Rep
 
 Add following secrets with following values in it:
 
+```
 AZURE_AD_CLIENT_ID: client id value of your service principal
+
 AZURE_AD_CLIENT_SECRET: client secret value of your service principal
+
 AZURE_SUBSCRIPTION_ID: subscription id value of your service principal
+
 AZURE_AD_TENANT_ID: tenant id value of your service principal
+```
 
 ## Using Terraform CLI
 
