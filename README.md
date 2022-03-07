@@ -1,5 +1,7 @@
 # IaC automation using GitHub Actions and Terraform
 
+[![CD](https://github.com/mohamedkdidi/terraform-github-actions/actions/workflows/terraform_cli.yml/badge.svg?branch=main)](https://github.com/mohamedkdidi/terraform-github-actions/actions/workflows/terraform_cli.yml)
+
 Using GitHub Actions and Terraform to achieve an automated 'Infrastructure as Code' (IaC) workflow helps to reduce the possibility of human error and ensures our deployment time is kept minimal.
 
 
