@@ -1,10 +1,4 @@
 terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "2.98.0"
-    }
-  }
   # Store Terraform state in Azure Storage
   backend "azurerm" {
     resource_group_name  = "rgkdiditfstates"
