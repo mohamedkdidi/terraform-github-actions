@@ -9,7 +9,8 @@ terraform {
 }
 
 provider "azurerm" {
-  version = "~>2.0"
+  source = "hashicorp/azurerm"
+  version = "2.74.0"
   features {}
 }
 
