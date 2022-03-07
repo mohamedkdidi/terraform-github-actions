@@ -1,4 +1,5 @@
 terraform {
+  # Store Terraform state in Azure Storage
   backend "azurerm" {
     resource_group_name  = "rgkdiditfstates"
     storage_account_name = "satfstatedevops"
@@ -14,13 +15,13 @@ provider "azurerm" {
 
 data "azurerm_client_config" "current" {}
 
-#Create Resource Group
+# Create Resource Group
 resource "azurerm_resource_group" "kdidi" {
   name     = "kdidi"
   location = "eastus2"
 }
 
-#Create Virtual Network
+# Create Virtual Network
 resource "azurerm_virtual_network" "vnet" {
   name                = "kdidi-vnet"
   address_space       = ["192.168.0.0/16"]
