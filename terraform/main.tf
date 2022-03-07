@@ -6,12 +6,6 @@ terraform {
     container_name       = "contterraformgithubactions"
     key                  = "keyterraformgithubactions.tfstate"
   }
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "2.98.0"
-    }
-  }
 }
 
 provider "azurerm" {
@@ -41,10 +35,3 @@ resource "azurerm_subnet" "subnet" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefix       = "192.168.0.0/24"
 }
-
-# Create a docker container
-resource "docker_container" "ubuntu" {
-  name  = "ubuntu-latest"
-  image = docker_image.ubuntu.latest
-}
-  
