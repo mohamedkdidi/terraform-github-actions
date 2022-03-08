@@ -1,7 +1,7 @@
 name: 'Terraform Cloud'
 on:
-  # push:
-  #   branches: [ master ]
+  push:
+    branches: [ master ]
   # pull_request:
   #   branches: [ master ]
     
@@ -15,7 +15,7 @@ jobs:
     - uses: hashicorp/setup-terraform@v1.1.0
       with:
         cli_config_credentials_hostname: app.terraform.io
-        cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
+        cli_config_credentials_token: ${{ secrets.TERRAFORM_API_TOKEN }}
         terraform_version: 0.12.0
       
     - name: 'Terraform Format'
@@ -36,4 +36,5 @@ jobs:
 
     - name: 'Terraform Apply'
       id: apply
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve -no-color -var=prefix=kdidi${{github.run_number}}
