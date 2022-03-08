@@ -1,0 +1,39 @@
+name: 'Terraform Cloud'
+on:
+  # push:
+  #   branches: [ master ]
+  # pull_request:
+  #   branches: [ master ]
+    
+jobs:
+
+  Terraform-Plan:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1.1.0
+      with:
+        cli_config_credentials_hostname: app.terraform.io
+        cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
+        terraform_version: 0.12.0
+      
+    - name: 'Terraform Format'
+      id: fmt
+      run: terraform fmt -recursive
+
+    - name: 'Terraform Init'
+      id: init
+      run: terraform init -no-color
+
+    - name: 'Terraform Validate'
+      id: validate
+      run: terraform validate -no-color
+
+    - name: 'Terraform Plan'
+      id: plan
+      run: terraform plan -no-color
+
+    - name: 'Terraform Apply'
+      id: apply
+      run: terraform apply -auto-approve -no-color -var=prefix=kdidi${{github.run_number}}
