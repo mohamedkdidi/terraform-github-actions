@@ -7,14 +7,15 @@ on:
   #   branches: [ main ]
 
 jobs:
-  terraform:
-    name: 'Terraform'
+  Terraform:
+    name: 'Terraform CLI'
+    # From Github secrets
     env:
-      # From Github secrets
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+
     runs-on: ubuntu-latest
     environment: production
 
@@ -33,18 +34,21 @@ jobs:
       with:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'fmt'
-        
+        tf_actions_working_dir: './terraform-cli'
+
     - name: 'Terraform Init'
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'init'
+        tf_actions_working_dir: './terraform-cli'
 
     - name: 'Terraform Validate'
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'validate'
+        tf_actions_working_dir: './terraform-cli'
         
     - name: 'Terraform Plan'
       uses: hashicorp/terraform-github-actions@master
@@ -52,6 +56,7 @@ jobs:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'plan'
         args: '-lock=false'
+        tf_actions_working_dir: './terraform-cli'
 
     - name: 'Terraform Apply'
       if: github.ref == 'refs/heads/main'
@@ -60,3 +65,4 @@ jobs:
         tf_actions_version: 0.14.8
         tf_actions_subcommand: 'apply'
         args: '-var=prefix=kdidi${{github.run_number}}'
+        tf_actions_working_dir: './terraform-cli'

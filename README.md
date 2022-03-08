@@ -33,5 +33,16 @@ AZURE_AD_TENANT_ID: tenant id value of your service principal
 
 ## Using Terraform Cloud
 
+Set the client id and client secret using environment variables in Terraform cloud:
+
+```
+ARM_CLIENT_ID
+
+ARM_CLIENT_SECRET
+
+ARM_TENANT_ID
+
+ARM_SUBSCRIPTION_ID
+```
 
 
