@@ -17,13 +17,13 @@ data "azurerm_client_config" "current" {}
 
 # Create Resource Group
 resource "azurerm_resource_group" "rsgroup" {
-  name     = "kdidi-resource-group"
+  name     = "${var.prefix}-resource-group"
   location = "eastus2"
 }
 
 # Create Virtual Network
 resource "azurerm_virtual_network" "vnet" {
-  name                = "kdidi-vnet"
+  name                = "${var.prefix}-vnet"
   address_space       = ["192.168.0.0/16"]
   location            = "eastus2"
   resource_group_name = azurerm_resource_group.rsgroup.name
@@ -31,7 +31,7 @@ resource "azurerm_virtual_network" "vnet" {
 
 # Create Subnet
 resource "azurerm_subnet" "subnet" {
-  name                 = "kdidi-subnet"
+  name                 = "${var.prefix}-subnet"
   resource_group_name  = azurerm_resource_group.rsgroup.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefix       = "192.168.0.0/24"
@@ -39,11 +39,11 @@ resource "azurerm_subnet" "subnet" {
 
 # Create a docker container
 resource "azurerm_container_group" "container" {
-  name                = "example-continst"
+  name                = "${var.prefix}-container"
   location            = azurerm_resource_group.rsgroup.location
   resource_group_name = azurerm_resource_group.rsgroup.name
   ip_address_type     = "public"
-  dns_name_label      = "aci-label"
+  dns_name_label      = "${var.prefix}-aci"
   os_type             = "Linux"
 
   container {
@@ -53,7 +53,7 @@ resource "azurerm_container_group" "container" {
     memory = "1.5"
 
     ports {
-      port     = 443
+      port     = 80
       protocol = "TCP"
     }
   }
