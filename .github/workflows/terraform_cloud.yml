@@ -1,15 +1,18 @@
 name: 'Terraform Cloud'
+
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   # pull_request:
-  #   branches: [ master ]
+  #   branches: [ main ]
     
 jobs:
 
-  Terraform-Plan:
+  Terraform:
+    name: 'Terraform Cloud'
     runs-on: ubuntu-latest
-    
+    environment: production
+
     steps:
     - uses: actions/checkout@v2
     - uses: hashicorp/setup-terraform@v1.1.0
@@ -21,14 +24,17 @@ jobs:
     - name: 'Terraform Format'
       id: fmt
       run: terraform fmt -recursive
+      working-directory: './terraform-cloud'
 
     - name: 'Terraform Init'
       id: init
       run: terraform init -no-color
+      working-directory: './terraform-cloud'
 
     - name: 'Terraform Validate'
       id: validate
       run: terraform validate -no-color
+      working-directory: './terraform-cloud'
 
     - name: 'Terraform Plan'
       id: plan
@@ -38,3 +44,4 @@ jobs:
       id: apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve -no-color -var=prefix=kdidi${{github.run_number}}
+      working-directory: './terraform-cloud'
