@@ -14,31 +14,33 @@ jobs:
     environment: production
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: hashicorp/setup-terraform@v1.1.0
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
       with:
-        cli_config_credentials_hostname: app.terraform.io
+        # terraform_version: 0.13.0
         cli_config_credentials_token: ${{ secrets.TERRAFORM_API_TOKEN }}
-        terraform_version: 0.12.0
       
-    - name: 'Terraform Format'
+    - name: Terraform Format
       id: fmt
-      run: terraform fmt -recursive
+      run: terraform fmt -check
       working-directory: './terraform-cloud'
 
-    - name: 'Terraform Init'
+    - name: Terraform Init
       id: init
-      run: terraform init -no-color
+      run: terraform init
       working-directory: './terraform-cloud'
 
-    - name: 'Terraform Validate'
+    - name: Terraform Validate
       id: validate
-      run: terraform validate -no-color
+      run: terraform validate
       working-directory: './terraform-cloud'
 
-    - name: 'Terraform Plan'
+    - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color
+      if: github.event_name == 'pull_request'
+      run: terraform plan
+      continue-on-error: true
+      working-directory: './terraform-cloud'
 
     - name: 'Terraform Apply'
       id: apply
