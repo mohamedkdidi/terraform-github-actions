@@ -17,21 +17,23 @@ Create service principal and assign contributor access on subscription (make sur
 
 az ad sp create-for-rbac --name "service-principal-github-terraform" --role contributor --scopes /subscriptions/[subscriptionid] --sdk-auth
 
-Then use the outcome of above azure cli query to create the secrets into the Repos. under the settings section of your repository
+Then use the outcome of above azure cli query to create the secrets into the Repos for pipeline with Terraform CLI or in Terraform Cloud for the pipeline with Terraform Cloud.
 
-Add following secrets with following values in it:
 
-```
-AZURE_AD_CLIENT_ID: client id value of your service principal
-
-AZURE_AD_CLIENT_SECRET: client secret value of your service principal
-
-AZURE_SUBSCRIPTION_ID: subscription id value of your service principal
-
-AZURE_AD_TENANT_ID: tenant id value of your service principal
-```
 
 ## Using Terraform CLI
+
+Under the settings section of your repository add following secrets:
+
+```
+AZURE_AD_CLIENT_ID:
+
+AZURE_AD_CLIENT_SECRET:
+
+AZURE_SUBSCRIPTION_ID:
+
+AZURE_AD_TENANT_ID:
+```
 
 ## Using Terraform Cloud
 
@@ -47,4 +49,7 @@ ARM_TENANT_ID
 ARM_SUBSCRIPTION_ID
 ```
 
-
+In Terraform cloud interface generate API token, then set this token in Github secret with name 
+```
+TERRAFORM_API_TOKEN
+```

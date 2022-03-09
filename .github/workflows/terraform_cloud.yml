@@ -11,6 +11,7 @@ jobs:
   Terraform:
     name: 'Terraform Cloud'
     runs-on: ubuntu-latest
+    environment: staging
 
     steps:
     - name: Checkout
