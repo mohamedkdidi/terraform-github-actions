@@ -1,11 +1,14 @@
 terraform {
-  # Store Terraform state in Azure Storage
-  backend "azurerm" {
-    resource_group_name  = "rgkdiditfstates"
-    storage_account_name = "satfstatedevops"
-    container_name       = "contterraformgithubactions"
-    key                  = "keyterraformgithubactions.tfstate"
+  # We strongly recommend using the required_providers block to set the
+  # Azure Provider source and version being used
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=2.97.0"
+    }
   }
+
+  required_version = ">= 1.1.0"
 
   cloud {
     organization = "kdidi"
@@ -16,7 +19,7 @@ terraform {
   }
 }
 
-
+# Configure the Microsoft Azure Provider
 provider "azurerm" {
   features {}
 }
