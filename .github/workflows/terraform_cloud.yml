@@ -3,7 +3,7 @@ name: 'Terraform Cloud'
 on:
   push:
     branches: [ main ]
-  pull_request:
+  #pull_request:
   #   branches: [ main ]
     
 jobs:
@@ -47,5 +47,5 @@ jobs:
     - name: 'Terraform Apply'
       id: apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve -no-color -var=prefix=kdidi${{github.run_number}}
+      run: terraform apply -auto-approve -lock=false -var=prefix=kdidi${{github.run_number}}
       working-directory: './terraform-cloud'
