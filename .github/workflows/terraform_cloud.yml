@@ -50,3 +50,8 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve -lock=false -var=prefix=kdidi${{github.run_number}}
       working-directory: './terraform-cloud'
+
+    - name: Terraform Destroy
+      id: destroy
+      run: terraform destroy
+      working-directory: './terraform-cloud'

@@ -66,3 +66,10 @@ jobs:
         tf_actions_subcommand: 'apply'
         args: '-var=prefix=kdidi${{github.run_number}} -lock=false'
         tf_actions_working_dir: './terraform-cli'
+
+    - name: 'Terraform Destroy'
+      uses: hashicorp/terraform-github-actions@master
+      with:
+        tf_actions_version: 0.14.8
+        tf_actions_subcommand: 'destroy'
+        tf_actions_working_dir: './terraform-cli'
